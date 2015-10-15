@@ -2,6 +2,7 @@
  * Created by lipingxiong on 8/21/15.
  */
 public class Strings {
+
     public static boolean isScample(String s1, String s2){
         if(s1.equals(s2)) return true;
         if(s1.length() != s2.length()) return false;
