@@ -1,41 +1,63 @@
 package tree;
-
+import tree.BTree.*;
 /**
  * Created by lipingxiong on 8/27/15.
  */
 public class closestValue {
-    public static class TreeNode {
-        TreeNode left;
-        TreeNode right;
-        TreeNode parent;
-        int val;
 
-        TreeNode(int x) {
-            this.left =null;
-            this.right = null;
-            this.parent  =null;
-            this.val = x;
-        }
+    public static void main(String[] args){
+        TreeNode root=BTree.createTree(new int[]{0, 3, 7, 30, 35});
+
+//        System.out.println(minDepth(root));
+        System.out.println(closestValue(root, 34));
     }
-    public int closestValue(TreeNode root, double target) {
-        double closest = Math.abs(root.val - target);
+// This is another which also works
+//    public static int closestValue(TreeNode root, double target){
+//        return closestNode(root,target).val;
+//    }
+//    public static TreeNode closestNode(TreeNode root, double target) {
+//        double closest= Math.abs(root.val-target);
+//        System.out.println(closest +"root"+root.val);
+////        if(root.left==null && root.right==null) return root;
+//
+//        if(target > root.val && root.right!=null){
+//            TreeNode resR=closestNode(root.right,target);
+//            System.out.println(resR.val+" resR");
+//            if (Math.abs(resR.val-target) < Math.abs(closest) ){
+//                return resR;
+//            }
+//        }
+//        else if(target<root.val && root.left!=null){
+//            TreeNode resL=closestNode(root.left,target);
+//            if (Math.abs(resL.val-target) < Math.abs(closest) ){
+//                return resL;
+//            }
+//        }
+//        return root;
+//
+//    }
+    private static int closestValue(TreeNode root,double target){
+        TreeNode node = closestNode(root,target);
+        if(node==null)return -1;
+        return node.val;
+    }
+    public static TreeNode closestNode(TreeNode root,double target){
+        if(root==null)return null;
         TreeNode cur = root;
-        int value=0;
-        while(cur!=null) {
-            if(Math.abs(cur.val - target) < closest){
-                closest = Math.abs(cur.val - target);
-                value = cur.val;
+        TreeNode clsnode =root;
+        double diff = Math.abs(root.val-target);
+        while(cur!=null){
+            if(cur.val==target) return  cur;
+            if(Math.abs(cur.val-target) <diff ){
+                diff=Math.abs(cur.val-target);
+                clsnode=cur;
             }
-            if(target < cur.val){
-                cur=cur.left;
-            }
-            else if(target > cur.val){
-                cur = cur.right;
-            }
-            else break;
+            if(target > cur.val) cur=cur.right;
+            else cur=cur.left;
         }
-        return value;
+        return clsnode;
     }
+
 
 
 }

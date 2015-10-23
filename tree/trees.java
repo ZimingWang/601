@@ -1,4 +1,6 @@
 package tree;
+import others.exam_601;
+import tree.BTree.*;
 
 //import javax.swing.tree.TreeNode;
 import apple.laf.JRSUIUtils;
@@ -9,27 +11,135 @@ import java.util.*;
 /**
  */
 public class trees {
-    public static class TreeNode {
-        TreeNode left;
-        TreeNode right;
-        TreeNode parent;
-        int val;
+//
 
-        TreeNode(int x) {
-            this.left =null;
-            this.right = null;
-            this.parent  =null;
-            this.val = x;
+//    public static void main(String[] args){
+////        TreeNode root= new TreeNode(2);
+////        root.left = new TreeNode(1);
+////        root.right = new TreeNode(3);
+////        inorder(root);
+////        System.out.println(inorderIteratively(root));
+////        System.out.println(topK(new int[]{10, 9, 6, 7, 11}, 3));
+//        TreeNode root = BTree.createTree(new int[]{1,2,3,4});
+//        trees ins = new trees();
+//        ins.ptrPath(root);
+//    }
+
+
+    public static boolean validPreOrder(int[] nums){
+        int min=Integer.MIN_VALUE;
+        return validPreOrder(nums,0,nums.length -1,min);
+    }
+
+    public static boolean validPreOrder(int[] nums,int start,int end,int min){
+        Stack<Integer> stack = new Stack<>();
+        int i=start;
+        if(nums[i]<=min) return false;
+        stack.push(nums[i++]);
+
+        while(i<=end){
+            if(i>0 && nums[i] < nums[i-1]){
+                if(nums[i]<=min) return false;
+                stack.push(nums[i++]);
+            }
+            else{
+                min= stack.peek();
+                return validPreOrder(nums,i,end,min);
+            }
         }
+        return true;
     }
+
+    public static class LinkedListNode {
+        int val;
+        LinkedListNode next;
+        LinkedListNode(int x){
+            val = x;
+        }
+    };
     public static void main(String[] args){
-        TreeNode root= new TreeNode(2);
-        root.left = new TreeNode(1);
-        root.right = new TreeNode(3);
-//        inorder(root);
-//        System.out.println(inorderIteratively(root));
-        System.out.println(topK(new int[]{10, 9, 6, 7, 11}, 3));
+//        LinkedListNode head = new LinkedListNode(1);
+        LinkedListNode head=createList(new int[]{1,2,3,4});
+        reorderList(head);
+//        ptrList(head);
     }
+    public static LinkedListNode createList(int[] nums){
+        LinkedListNode head = new LinkedListNode(nums[0]);
+        LinkedListNode cur = head;
+        for(int i=1;i<nums.length;i++){
+            LinkedListNode node = new LinkedListNode(nums[i]);
+            cur.next = node;
+            cur=node;
+        }
+        ptrList(head);
+        return head;
+    }
+    public static void ptrList(LinkedListNode head){
+        LinkedListNode cur = head;
+        while(cur!=null){
+            System.out.print(cur.val);
+            cur=cur.next;
+        }
+        System.out.println();
+    }
+    static LinkedListNode reorderList(LinkedListNode head) {
+        LinkedListNode walker = head;
+        LinkedListNode runner = head;
+        while(runner!=null&&runner.next!=null){
+            walker=walker.next;
+            runner=runner.next.next;
+        }
+        System.out.println(walker.val);
+        LinkedListNode last=walker;
+        //reverse
+        LinkedListNode dummy = new LinkedListNode(0);
+        dummy.next = walker;
+        LinkedListNode cur = last.next;
+
+        while(cur!=null){
+            last.next=cur.next;
+            cur.next = dummy.next;
+            dummy.next = cur;
+            cur=last.next;
+        }
+        ptrList(dummy);
+
+        LinkedListNode p1=head;
+        LinkedListNode p2=dummy.next;
+        ptrList(head);
+
+        while(p1!=null && p2!=null){
+//            System.out.println(p1.val+" "+p2.val);
+            if(p1.next==dummy.next) p1.next=null;
+            LinkedListNode n1=p1.next;
+
+            LinkedListNode n2=p2.next;
+            p2.next=n1;
+            p1.next=p2;
+            p1=n1;
+            p2=n2;
+        }
+
+        return head;
+    }
+
+
+
+
+    public  void ptrPath(TreeNode root){
+        ptrPath(root,"");
+    }
+    public void ptrPath(TreeNode root,String path){
+        if(root==null) return;
+        if(root.left==null && root.right==null) {
+            System.out.println(path+""+root.val);
+            return;
+        }
+        ptrPath(root.left, path+""+root.val);
+        ptrPath(root.right, path+""+root.val);
+    }
+
+
     public static int[] twoSum(int[] arr, int target){
         int i=0;
         int j=arr.length-1;

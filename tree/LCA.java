@@ -1,17 +1,18 @@
 package tree;
 
 /**
- * Created by lipingxiong on 8/17/15.
  */
 public class LCA {
     public static class TreeNode {
         TreeNode left;
         TreeNode right;
+        TreeNode parent;
         int val;
 
         TreeNode(int x) {
             this.left = null;
             this.right = null;
+            this.parent=null;
             this.val = x;
         }
     }
@@ -43,6 +44,14 @@ public class LCA {
 //        if(n1 == null || n2==null) return null;
 //        return findLCA(root, n1, n2);
 //    }
+
+//    // has parent
+//    public static TreeNode LCAHasParent(TreeNode root){
+//        //find n1, h1
+//        //find n2,h2
+//
+//    }
+
 
     /*
      * For test

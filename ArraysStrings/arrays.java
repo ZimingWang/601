@@ -1,6 +1,8 @@
 package ArraysStrings;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by lipingxiong on 10/12/15.
@@ -18,6 +20,59 @@ public class arrays {
         String res = a.minWindow(S,T) ;
         System.out.println(res);
     }
+
+    public void moveZeroes(int[] nums) {
+        int count = 0;
+        for(int n:nums){
+            if(n!=0){
+                nums[count++]=n;
+            }
+        }
+        for(int i=count;i<nums.length;i++){
+            nums[i]=0;
+        }
+    }
+/*
+[
+     [2],
+    [3,4],
+   [6,5,7],
+  [4,1,8,3]
+]
+The minimum path sum from top to bottom is 11 (i.e., 2 + 3 + 5 + 1 = 11).
+ */
+    public int minimumTotal(List<List<Integer>> triangle) {
+        int n= triangle.size();
+        int[] t= new int[n];
+        for(int j=0;j<n;j++) t[j]=triangle.get(n-1).get(j);
+
+        for(int i=n-2;i>=0;i--){
+            List<Integer> list = triangle.get(i);
+            for(int j=0;j<=i;j++) {
+                int min=t[j];
+//                if(j>0) min = Math.min(min,t[j-1]);
+                min= Math.min(min,t[j+1]);
+                t[j] = list.get(j) + min;
+            }
+         }
+        return t[0];
+    }
+
+    public int removeElement(int[] A, int elem) {
+        int n = A.length;
+        int i=0;
+        int j = n-1;
+        while(i<j){
+            while(i<n && A[i]!=elem) i++; //until A[i]==elem
+            if(i>=n) return n;
+            while(j>i && A[j]==elem) j--;
+            A[i++]=A[j--];
+        }
+        if(i==j && A[i]==elem ) return j;
+//        else if(i==j && A[i]!=elem ) return j+1;
+        return j+1;
+    }
+
     /*
     S = "ADOBECODEBANC"
     T = "ABC"

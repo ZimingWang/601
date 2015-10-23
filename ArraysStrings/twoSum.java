@@ -54,8 +54,35 @@ public class twoSum {
     }
     public static void main(String[] args){
         twoSum ins = new twoSum();
-        System.out.println(ins.twoSumCount(new int[]{2, 3, 3, 2, 3}, 5));
-        System.out.println(ins.twoSumCount(new int[]{2, 3, 3, 4}, 6));
-        System.out.println(ins.twoSumCount(new int[]{2, 3, 3, 4}, 7));
+//        System.out.println(ins.twoSumCount(new int[]{2, 3, 3, 2, 3}, 5));
+//        System.out.println(ins.twoSumCount(new int[]{2, 3, 3, 4}, 6));
+//        System.out.println(ins.twoSumCount(new int[]{2, 3, 3, 4}, 7));
+        int[] res=ins.twoSumSorted(new int[]{2, 3, 3, 4}, 7);
+        System.out.println(res[0]);
+        System.out.println(res[1]);
     }
+
+
+    public int[] twoSum(int[] nums, int target) {
+        HashMap<Integer,Integer> map = new HashMap<>();
+        for(int i=0;i<nums.length;i++){
+            if(map.containsKey( target - nums[i])) {
+                return new int[]{map.get(target-nums[i])+1, i+1};
+            }
+            if(!map.containsKey(nums[i])) map.put(nums[i],i);
+        }
+        return new int[]{};
+    }
+
+    public int[] twoSumSorted(int[] nums, int target) {
+        int i=0;
+        int j=nums.length -1;
+        while(i<j){
+            if(nums[i] + nums[j] == target) return new int[]{i+1,j+1};
+            else if (nums[i] + nums[j] > target) j--;
+            else i++;
+        }
+        return new int[]{};
+    }
+
 }
