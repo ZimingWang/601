@@ -53,6 +53,7 @@ public class exam_601 {
             dummy.next = cur;
             cur=last.next;
         }
+
         LinkedListNode p1=head;
         LinkedListNode p2=dummy.next;
         while(p1!=null&&p1.next!=dummy.next){
@@ -65,4 +66,5 @@ public class exam_601 {
         }
         return head;
     }
+
 }

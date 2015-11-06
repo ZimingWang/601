@@ -1,6 +1,8 @@
 package graph;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Stack;
 
 /**
@@ -12,50 +14,49 @@ public class courseSchedule2 {
     boolean hasCycle=false;
 
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        ArrayList<Integer>[] graph = new ArrayList[numCourses];
-        for(int i=0;i<numCourses;i++){
-            graph[i]= new ArrayList<Integer>();
-        }
-        for (int i = 0; i < prerequisites.length; i++) {
-            graph[prerequisites[i][1]].add(prerequisites[i][0]); //pre->take
-        }
+        if(prerequisites==null) return new int[]{};
+        HashMap<Integer,ArrayList<Integer>> map = new HashMap<>();
 
-        boolean[] visited = new boolean[numCourses];
-        boolean[] onStack=new boolean[numCourses];//for cycle detection
-
-        for(int i=0;i<numCourses;i++) {// dfs each vertex
-            if(hasCycle) return new int[]{};
-            if(!visited[i]) dfs(graph, visited, onStack, i);
+        for(int i=0;i<prerequisites.length;i++){
+            int take = prerequisites[i][0];
+            int pre = prerequisites[i][1];
+            if(!map.containsKey(pre)) map.put(pre,new ArrayList<Integer>());
+            map.get(pre).add(take);
         }
-        int i = 0;
+        HashSet<Integer> visited = new HashSet<>();
+        HashSet<Integer> stack = new HashSet<>();
         int[] res = new int[numCourses];
-//        System.out.println(hasCycle);
 
-        // convert stack to list
-        while(!reversePost.isEmpty()){
-            res[i++]=reversePost.pop();
+        for(int i=0;i<numCourses;i++) {
+            if(hasCycle) return new int[]{};
+            System.out.println("i="+i);
+            if(!visited.contains(i)) dfs(map,i,visited,stack);
         }
-
+        int i=0;
+        while(!reversePost.isEmpty()){
+            res[i++] = reversePost.pop();
+        }
         return res;
     }
-
-    public void dfs(ArrayList<Integer>[] graph, boolean[] visited,boolean[] onStack,int v){
-        if(hasCycle) return;
-        visited[v] = true;
-        onStack[v] = true; //for cycle detection
-        
-        for(int i=0;i<graph[v].size();i++){
-            int w = graph[v].get(i);
-            if(!visited[w]){
-                dfs(graph, visited,onStack,w);
-            }
-            else if(onStack[w]) { //for cycle detection
-                hasCycle=true;
-                return;
+    public void dfs(HashMap<Integer,ArrayList<Integer>> map,int cur,
+                              HashSet<Integer> visited, HashSet<Integer> stack) {
+        System.out.println("cur="+cur);
+        visited.add(cur);
+        stack.add(cur);
+        if (map.containsKey(cur)){
+            System.out.println("cur in map="+cur);
+            for (int neigh : map.get(cur)) {
+                if (!visited.contains(neigh)) {
+                    dfs(map, neigh, visited, stack);
+                    visited.add(neigh);
+                } else if (stack.contains(neigh)) {
+                    hasCycle = true;
+                    return;
+                }
             }
         }
-        onStack[v]=false; //for cycle detection
-        reversePost.push(v);
+        stack.remove(cur);
+        reversePost.push(cur);
     }
 
     public static void prtArr(int[] arr){

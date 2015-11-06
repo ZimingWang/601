@@ -23,6 +23,8 @@ public class DPs {
         return Math.max(excl,incl);
     }
 
+
+
     int cut_ord(int[] p,int n) {
         int m  = p.length;
         int[][] dp = new int[m+1][n+1];

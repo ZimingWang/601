@@ -1,30 +1,133 @@
 package tree;
-import others.exam_601;
-import tree.BTree.*;
-
-//import javax.swing.tree.TreeNode;
-import apple.laf.JRSUIUtils;
-import sun.awt.AWTIcon32_security_icon_yellow16_png;
 
 import java.util.*;
 
 /**
  */
 public class trees {
+//    public static class TreeNode {
+//        TreeNode left;
+//        TreeNode right;
+//        TreeNode parent;
+//        int val;
 //
-
-//    public static void main(String[] args){
-////        TreeNode root= new TreeNode(2);
-////        root.left = new TreeNode(1);
-////        root.right = new TreeNode(3);
-////        inorder(root);
-////        System.out.println(inorderIteratively(root));
-////        System.out.println(topK(new int[]{10, 9, 6, 7, 11}, 3));
-//        TreeNode root = BTree.createTree(new int[]{1,2,3,4});
-//        trees ins = new trees();
-//        ins.ptrPath(root);
+//        TreeNode(int x) {
+//            this.left =null;
+//            this.right = null;
+//            this.parent  =null;
+//            this.val = x;
+//        }
 //    }
 
+    public static void main(String[] args){
+//        TreeNode root= new TreeNode(2);
+//        root.left = new TreeNode(1);
+//        root.right = new TreeNode(3);
+//        inorder(root);
+//        System.out.println(inorderIteratively(root));
+//        System.out.println(topK(new int[]{10, 9, 6, 7, 11}, 3));
+//        TreeNode root = BTree.createTree(new int[]{1,2,3,4});
+//        trees ins = new trees();
+        String s = "3,null,";
+        String[] arr = s.split(",");
+        com.com.ptrStr(arr);
+    }
+
+//    boolean checkBST(TreeNode n, Integer min, Integer max){
+//        if(min!=null && n.val<min || )
+//    }
+
+    public static List<Integer> serialize(TreeNode root){
+        List<Integer> res = new LinkedList<>();
+        serialize(root, res);
+//        res.toArray()
+        return res;
+    }
+    public static void serialize(TreeNode root, List<Integer> res){
+//        List<Integer> res = new ArrayList<>();
+        if(root==null) {
+            res.add(-1);
+            return;
+        }
+        else res.add(root.val);
+        TreeNode cur = root;
+        serialize(root.left,res);
+        serialize(root.right,res);
+    }
+
+//    public static TreeNode deserialize(LinkedList<Integer>,int[] index){
+//        TreeNode root = null;
+//        int idx = index[0];
+//        if(arr[idx]==-1) {
+//            index[0] = idx+1;
+//            return null;
+//        }
+//
+//        root = new TreeNode(arr[idx]);
+//        root.left = deserialize( arr, index);
+//        root.right = deserialize( arr, index);
+//        return root;
+//    }
+
+     public void createList(TreeNode root, List< List<Integer> > lists, int level){
+         if(root==null) return;
+
+         List<Integer> list = null;
+
+         if(lists.size() == level) {
+//             list = new ArrayList<Integer>();
+             lists.add( new ArrayList<Integer>());
+         }
+         else{
+             list = lists.get(level);
+         }
+
+         list.add(root.val);
+
+         createList(root.left, lists, level + 1);
+         createList(root.right, lists,level + 1);
+     }
+
+     public List<List<Integer>> levelOrder(TreeNode root) {
+         List< List<Integer>> lists = new ArrayList<>();
+         createList(root, lists, 0 );
+         return lists;
+     }
+
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        LinkedList<List<Integer>> list = new LinkedList<List<Integer>>();
+        addLevel(list, 0, root);
+        return list;
+    }
+
+    private void addLevel(LinkedList<List<Integer>> list, int level, TreeNode node) {
+        if (node == null) return;
+        // < level, means need to create new list
+        if (list.size()-1 < level) list.addFirst(new LinkedList<Integer>());
+
+        list.get(list.size()-1-level).add(node.val);
+
+        addLevel(list, level+1, node.left);
+        addLevel(list, level + 1, node.right);
+    }
+
+
+    private int height(TreeNode root){
+        if(root == null) return -1;
+        else return 1 + height(root.left);
+    }
+    public int countNodes(TreeNode root){
+        int count =0;
+        if(root ==null) return 0;
+        int h = height(root);
+        int hR = height(root.right);
+        if(hR == h-1){
+            return 1<<h + countNodes(root.right);
+        }
+        else {
+            return 1<<(h-1) + countNodes(root.left);
+        }
+    }
 
     public static boolean validPreOrder(int[] nums){
         int min=Integer.MIN_VALUE;
@@ -57,12 +160,12 @@ public class trees {
             val = x;
         }
     };
-    public static void main(String[] args){
-//        LinkedListNode head = new LinkedListNode(1);
-        LinkedListNode head=createList(new int[]{1,2,3,4});
-        reorderList(head);
-//        ptrList(head);
-    }
+//    public static void main(String[] args){
+////        LinkedListNode head = new LinkedListNode(1);
+//        LinkedListNode head=createList(new int[]{1,2,3,4});
+//        reorderList(head);
+////        ptrList(head);
+//    }
     public static LinkedListNode createList(int[] nums){
         LinkedListNode head = new LinkedListNode(nums[0]);
         LinkedListNode cur = head;
@@ -329,40 +432,27 @@ public class trees {
 
         return res;
     }
-    private int height(TreeNode root){
-        if(root == null) return -1;
-        return Math.max(height(root.left), height(root.right)) + 1;
-    }
-    public int countNodes(TreeNode root){
-        int h = height(root);
-        if(height(root.right) == h-1){
-            return 1<<h + countNodes(root.right);
-        }
-        else{
-            return 1<<(h-1) + countNodes(root.left);
-        }
-    }
 
-    public int countUnivalSubtrees(TreeNode root) {
-        int[] count = new int[1];
-        check(root,count);
-        return count[0];
-    }
-    public boolean check(TreeNode root, int[] count){
-        if(root==null) return false;
-        if(root.left==null && root.right == null) {
-            count[0]++;
-            return true;
-        }
-        boolean l = check(root.left, count);
-        boolean r = check(root.right, count);
-        if(l&&r){
-            if(root.left !=null && root.val != root.left.val
-                    || root.right !=null && root.val != root.right.val) return false;
-            return true;
-        }
-        return false;
-    }
+//    public int countUnivalSubtrees(TreeNode root) {
+//        int[] count = new int[1];
+//        check(root,count);
+//        return count[0];
+//    }
+//    public boolean check(TreeNode root, int[] count){
+//        if(root==null) return false;
+//        if(root.left==null && root.right == null) {
+//            count[0]++;
+//            return true;
+//        }
+//        boolean l = check(root.left, count);
+//        boolean r = check(root.right, count);
+//        if(l&&r){
+//            if(root.left !=null && root.val != root.left.val
+//                    || root.right !=null && root.val != root.right.val) return false;
+//            return true;
+//        }
+//        return false;
+//    }
 
     public int maxSum = Integer.MIN_VALUE;
     public int maxPathSum(TreeNode root) {

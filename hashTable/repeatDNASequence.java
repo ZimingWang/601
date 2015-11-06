@@ -24,7 +24,7 @@ import java.util.List;
 public class repeatDNASequence {
     public static void main(String args[]){
 //        System.out.println(change("AAAAACCCCC"));
-        findRepeatedDnaSequences("AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT");
+        findRepeatedDnaSequences2("AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT");
     }
     public static int getNum(String s){
         int res = 0;
@@ -84,6 +84,8 @@ public class repeatDNASequence {
         {
             String cur=s.substring(i,i+10);
             int curint=change(cur);
+            System.out.println(curint);
+
             if(!map.containsKey(curint))
             {
                 map.put(curint,1);

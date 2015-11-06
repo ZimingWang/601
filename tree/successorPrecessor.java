@@ -114,6 +114,7 @@ public class successorPrecessor {
     //has parent
     TreeNode getSuccessor(TreeNode node){
         if(node==null)return null;
+
         if(node.right!=null){
             TreeNode cur = node.right;
             while(cur.left!=null){

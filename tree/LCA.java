@@ -95,4 +95,5 @@ public class LCA {
         printResult("LCA of 6,7:", resNode);
 
     }
+
 }

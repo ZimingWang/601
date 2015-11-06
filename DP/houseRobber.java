@@ -31,5 +31,17 @@ public class houseRobber {
         return incl;
     }
 
+    public static int hRob(int[] nums){
+        int incl = nums[0];
+        int excl = 0;
+        for(int i=1;i<nums.length;i++){
+            int tmp = incl;
+            incl = Math.max(incl,excl + nums[i]);
+            excl = tmp;
+        }
+        return Math.max(incl,excl);
+    }
+
+
 
 }

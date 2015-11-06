@@ -19,7 +19,6 @@ public class quickSort {
         int pIndex = partition(A,start, end);
         quickSort(A, start, pIndex - 1);
         quickSort(A, pIndex + 1, end);
-
     }
     public static int partition(int[] A, int start, int end){
         int pv=A[end];
@@ -30,17 +29,20 @@ public class quickSort {
                 A[i]=A[idx];
                 A[idx++]=tmp;
             }
+            ptrArr(A);
         }
         int tmp = A[idx];
         A[idx]=A[end];
         A[end]=tmp;
-        System.out.println("pivote index="+idx);
+        ptrArr(A);
+
+        System.out.printf("start=%d,end=%d,pivote idx=%d, A[idx]=%d\n",start,end,idx, A[idx]);
         return idx;
     }
 
     public static void ptrArr(int[] num){
         for(int k=0;k<num.length;k++){
-            System.out.print(num[k]);
+            System.out.print(num[k]+",");
         }
         System.out.println();
     }

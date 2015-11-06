@@ -9,6 +9,9 @@ import java.util.Set;
  * Created by lipingxiong on 10/17/15.
  */
 public class segmentTree{
+
+
+
 /*
     class Solution2 {
         class Interval {

@@ -59,52 +59,82 @@ public class facebooks {
 
 
     public static void  main(String[] args){
-        System.out.println(isPld("a"));
-        System.out.println(isPld(","));
-        System.out.println(isPld(",,"));
-        System.out.println(isPld(",b,"));
-        System.out.println(isPld("a,,a"));
-        System.out.println(isPld("a,b,a"));
-        System.out.println(isPld(",,a"));
+//        System.out.println(isPld("a"));
+//        System.out.println(isPld(","));
+//        System.out.println(isPld(",,"));
+//        System.out.println(isPld(",b,"));
+//        System.out.println(isPld("a,,a"));
+//        System.out.println(isPld("a,b,a"));
+//        System.out.println(isPld(",,a"));
+
+        System.out.println(isPalindrome(".a,"));
     }
-    public static boolean isPld(String s){
-        if(s==null || s.length()==0)return false;
-        int i=0,j=s.length()-1;
-        int n = s.length();
-        while(i<=j){
-            while(i<n && !isValid(s.charAt(i)))i++;
-            if(i==n) return false;
-            while(!isValid(s.charAt(j)))j--;
-            if(!isSame(s.charAt(i),s.charAt(j))) {
+//    public static boolean isPld(String s){
+//        if(s==null || s.length()==0)return false;
+//        int i=0,j=s.length()-1;
+//        int n = s.length();
+//        while(i<=j){
+//            while(i<n && !isValid(s.charAt(i)))i++;
+//            if(i==n) return false;
+//            while(!isValid(s.charAt(j)))j--;
+//            if(!isSame(s.charAt(i),s.charAt(j))) {
+//                return false;
+//            }
+//            i++;
+//            j--;
+//        }
+//        return true;
+//    }
+//    public static boolean isValid(char c){
+//        if(c<='Z'&& c>='A'||c<='z'&&c>='a'){
+//            return true;
+//        }
+//        return false;
+//    }
+//    public static boolean isSame(char c1,char c2) {
+////        if()
+//        if (c1 <= 'Z' && c1 >= 'A') c1 = (char) (c1 - 'A' + 'a');
+//        if (c2 <= 'Z' && c2 >= 'A') c2 = (char) (c2 - 'A' + 'a');
+//        return c1 == c2;
+//    }
+
+    public static boolean isPalindrome(String s) {
+        int i=0;
+        int j=s.length()-1;
+        while(i<j){
+            if(!isValid(s.charAt(i)))  {i++;continue;}
+            if(!isValid(s.charAt(j)) ) {j--;continue;}
+
+            //System.out.printf("i=%d,j=%d\n",i,j);
+
+            if(!isEqual(s.charAt(i),s.charAt(j)) ){
                 return false;
             }
             i++;
             j--;
         }
+        //System.out.printf("i=%d,j=%d\n",i,j);
         return true;
     }
     public static boolean isValid(char c){
-        if(c<='Z'&& c>='A'||c<='z'&&c>='a'){
+        // a- z; A-Z; 0-9;
+        if(c>='a'&&c<='z' || (c>='A'&&c<='Z') || (c>='0'&&c<='9') ) {
             return true;
         }
         return false;
     }
-    public static boolean isSame(char c1,char c2){
-//        if()
-        if(c1<='Z'&&c1>='A') c1 = (char) (c1-'A'+'a');
-        if(c2<='Z'&&c2>='A') c2 = (char) (c2-'A'+'a');
+    public static boolean isEqual(char c1, char c2){
+        if(c1>='A'&&c1<='Z'){
+            c1=(char)(c1-'A'+'a');
+        }
+        if(c2>='A' && c2<='Z'){
+            c2=(char)(c2-'A'+'a');
+        }
         return c1==c2;
     }
-/*
-""
-","
-",,"
-",a"
-"a"
 
-"a,,a"
-"a,b,a"
 
- */
+
+
 }
 

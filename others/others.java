@@ -28,11 +28,200 @@ public class others {
 //        System.out.println("56#".indexOf("#"));
 //        List<String> strs=o.decode("3#abc2#ef");
 //        System.out.println(o.encode(strs));
-        String s="ABC";
-        ArrayList<String> res = new ArrayList<>();
-        o.f(s,"",res, s.length());
-        System.out.println(res.size());
+
+//        String s="ABC";
+//        ArrayList<String> res = new ArrayList<>();
+//        o.f(s,"",res, s.length());
+//        System.out.println(res.size());
+
+//        int res = Integer.parseInt("05") + 1;
+//        System.out.println(res);
+
+
+//        oneDistance("abcd", "acbd");
+//        oneDistance("abcd", "abc");
+//        oneDistance("ab", "abc");
+//        oneDistance("abc", "ac");
+//        oneDistance("a", "a");
+//        oneDistance("", "a");
+
+//        System.out.println(biggestSibling(253));
+//        System.out.println(Integer.MAX_VALUE);
+//        System.out.println(4*Integer.MAX_VALUE * Integer.MAX_VALUE) ;
+//
+//        System.out.println(4*Integer.MAX_VALUE * Integer.MAX_VALUE < Long.MAX_VALUE) ;
+//        System.out.println(Long.MAX_VALUE);
+//        System.out.println(Double.MAX_VALUE);
+
+//        String s = "ab";
+//        String t = "abc";
+//        System.out.println(s.substring(1));
+//        System.out.println(s.substring(2).equals(t.substring(3)) );
+//        System.out.println("abc".substring(1));
+}
+
+//    public static int longestchain(String[] dict){
+//        HashSet<String> set = new HashSet<>();
+//        int max =0;
+//        for(String s:dict){
+//            set.add(s);
+//        }
+//        for(String s:dict) {
+//            max = Math.max(max, longestchain(set, s));
+//        }
+////        max = longestchain(set,"abcd");
+//        return max;
+//    }
+//    public static int longestchain(HashSet<String> set,String cur){
+//        System.out.println("cur="+cur);
+//        ptrSet(set);
+//
+//        if(cur.length()==1) return 1;
+//        int max= 0;
+//
+//        set.remove(cur);
+//        for(int i=0;i<cur.length();i++){
+//            String substr = cur.substring(0,i)+cur.substring(i+1);//remove charAt(i)
+////            System.out.println(substr);
+//
+//            if(set.contains(substr)){
+//                int res = longestchain(set,substr);
+//                max = Math.max(max,res + 1);
+//            }
+//        }
+//        set.add(cur);//recover
+//        return max;
+//    }
+
+
+
+//
+//    第一题，把一个integer的数字顺序打乱后得到的新的integer叫做该integer的sibling   比如 123和231，132，213，321都是sibling，但和222就不是。
+//    写个程序找一个integer的所有sibling里面最大的。比如上面那个例子返回321.
+//    我的思路就是把integer弄成string 再转成char array，然后sort一下，再转回integer。注意最后的integer可能会溢出，所以查看edge case
+
+    public static int biggestSibling (int n){
+        int res = 0;
+        String s = String.valueOf(n);
+        char arr[] = s.toCharArray();
+        Arrays.sort(arr);
+        for(int i=arr.length-1;i>=0;i--){
+            System.out.println(arr[i]);
+            res = res*10 + (int)(arr[i]-'0');
+        }
+        if(res > Integer.MAX_VALUE) return Integer.MAX_VALUE;
+        else return res;
     }
+
+
+//    int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
+//        int left = Math.max(A,E), right = Math.max(Math.min(C,G), left);
+//        int bottom = Math.max(B,F), top = Math.max(Math.min(D, H), bottom);
+//        return (C-A)*(D-B) - (right-left)*(top-bottom) + (G-E)*(H-F);
+//    }
+//    int solution(int K, int L, int M, int N, int P, int Q, int R, int S){
+//        int left = Math.max(K, P), right = Math.max(Math.min(M, R), left);
+//        int bottom = Math.max(L, Q), top = Math.max(Math.min(N, S), bottom);
+//        return (M-K)*(N-L) - (right-left)*(top-bottom) + (R-P)*(S-Q);
+//    }
+//
+//    int computeArea(int K, int L, int M, int N, int P, int Q, int R, int S){
+//        // write your code in Java SE 8
+//        long res = 0;
+//        long area_1 = (M-K)*(N-L);
+//        long area_2 = (R-P)*(S-Q);
+//
+//        if(M <= P || L >= S || R <= K || Q >= N){
+//            res = area_1 + area_2;
+//        }
+//        else {
+//            int left = Math.max(K, P);
+//            int right = Math.min(M, R);
+//
+//            int bottom = Math.max(L, Q);
+//            int top = Math.min(N, S);
+//
+//            res = area_1 + area_2 - (right - left) * (top - bottom);
+//        }
+//        return res > Integer.MAX_VALUE ? -1 : (int)res;
+//    }
+
+    int computeArea(int K, int L, int M, int N, int P, int Q, int R, int S){
+        // write your code in Java SE 8
+        double res = 0;
+        double area_1 = (M-K)*(N-L);
+        double area_2 = (R-P)*(S-Q);
+
+        if(M <= P || L >= S || R <= K || Q >= N){
+            res = area_1 + area_2;
+        }
+        else {
+            int left = Math.max(K, P);
+            int right = Math.min(M, R);
+
+            int bottom = Math.max(L, Q);
+            int top = Math.min(N, S);
+            double overlap = (right - left) * (top - bottom);
+            res = area_1 + area_2 - overlap;
+        }
+        return res > Integer.MAX_VALUE ? -1 : (int)res;
+    }
+
+    /*
+if S can be converted to T by inserting or deleting a Character, output "INSERT x"  and " DELETE x" respectively.
+If S is different from T in that two consective characters in S can be swapped to get T, output "SWAP x y".
+   Otherwise, output "IMPOSSIBLE"
+    */
+
+    public static void oneDistance(String s1, String s2){
+        int m = s1.length();
+        int n = s2.length();
+        if(Math.abs(m-n) > 1) {
+            System.out.println("IMPOSSIBLE");
+            return ;
+        }
+        int minLen = Math.min(s1.length(),s2.length());
+        int i=0;
+        for(;i<=minLen;i++){
+            if( i==minLen || s1.charAt(i)!=s2.charAt(i) ){
+                if(m==n){
+                    if(i==minLen) {
+                        System.out.println("IMPOSSIBLE");
+                        return;
+                    }
+                    if(s1.substring(i+1).equals(s2.substring(i+1))){
+                        System.out.println("Replace x y");
+                        return ;
+                    }
+                    if(i<minLen-1 && s1.charAt(i)==s2.charAt(i+1) && s2.charAt(i)==s1.charAt(i+1) && s1.substring(i+2).equals(s2.substring(i+2))){
+                        System.out.println("SWAP x y");
+                        return;
+                    }
+
+                }
+
+                else if(m<n){
+                    if(s1.substring(i).equals( s2.substring(i+1) )) {
+                        System.out.println("INSERT x");
+                        return;
+                    }
+                }
+                else if(m>n){
+                    if(s1.substring(i+1).equals( s2.substring(i))) {
+                        System.out.println("DELETE x");
+                        return;
+                    }
+                }
+                break;
+            }
+        }
+
+        System.out.println("IMPOSSIBLE");
+    }
+
+
+
+
     void f(String s,String item, ArrayList<String> res,int len){
         if(len==0){
             res.add(item);

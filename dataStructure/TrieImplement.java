@@ -4,6 +4,7 @@ package dataStructure;
  * Created by lipingxiong on 8/25/15.
  */
 public class TrieImplement {
+
     class TrieNode{
         boolean isEndOfWord;
         TrieNode[] children;
@@ -12,47 +13,63 @@ public class TrieImplement {
             children = new TrieNode[26];// max 26 children
         }
     }
+
     public class Trie{
-        TrieNode root;//root of whole tree
+        TrieNode root = null;
 
         public Trie(){
             root= new TrieNode();
         }
         public void insert(String word){
-            TrieNode runner = root;
-            for(char c:word.toCharArray()){
-                if(runner.children[c-'a'] == null){
-                    runner.children[c-'a'] = new TrieNode();
-                    runner = runner.children[c-'a'];
+
+            TrieNode cur = root;
+            for(char c : word.toCharArray()){
+                if(cur.children[c-'a']==null){
+                    cur.children[c-'a'] = new TrieNode();
                 }
+                cur = cur.children[c-'a'];
             }
-            runner.isEndOfWord = true;
+            cur.isEndOfWord = true;
+
         }
         public boolean search(String word){
-            TrieNode runner = root;
-            for(char c: word.toCharArray()){
-                if(runner.children[c-'a'] == null){
-                    return false;
-                }
-                else{
-                    runner= runner.children[c-'a'];
-                }
+            TrieNode cur = root;
+            for(char c : word.toCharArray()){
+                if(cur.children[c-'a'] == null ) return false;
+                else cur=cur.children[c-'a'];
             }
-            return runner.isEndOfWord;
+            return cur.isEndOfWord;
+
         }
         // Returns if there is any word in the trie
         // that starts with the given prefix.
         public boolean startsWith(String prefix){
-            TrieNode runner = root;
-            for(char c: prefix.toCharArray()){
-                if(runner.children[c-'a'] == null){
+            TrieNode cur = root;
+            for(char c : prefix.toCharArray()){
+                if(cur.children[c-'a'] == null){
                     return false;
                 }
-                else{
-                    runner= runner.children[c-'a'];
-                }
+                else cur =cur.children[c-'a'];
             }
             return true;
         }
     }
 }
+
+//
+//public class Trie{
+//
+//    public Trie(){
+//
+//    }
+//    public void insert(String word){
+//    }
+//    public boolean search(String word){
+//
+//    }
+//    // Returns if there is any word in the trie
+//    // that starts with the given prefix.
+//    public boolean startsWith(String prefix){
+//
+//    }
+//}

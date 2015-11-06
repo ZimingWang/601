@@ -23,6 +23,7 @@ public class countPaths {
         long[] T = new long[target+1];
         T[0] = 1;
         long mod = (long)(Math.pow(10,9) + 7);
+
         for(int i=0;i<=target;i++){
             for(int j=0;j<A.length;j++){
                 if(i>=A[j]){

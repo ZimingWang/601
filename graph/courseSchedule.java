@@ -1,9 +1,6 @@
 package graph;
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Created by lipingxiong on 8/21/15.
@@ -111,8 +108,13 @@ public class courseSchedule {
 
     public static void main(String[] args){
         courseSchedule ins = new courseSchedule();
-        System.out.println(ins.canFinishDFS(2, new int[][]{{0, 1}, {1, 0}}));
-        System.out.println(ins.canFinishDFS(3, new int[][]{{0, 1}, {1, 2}}));
+//        System.out.println(ins.canFinishDFS(2, new int[][]{{0, 1}, {1, 0}}));
+//        System.out.println(ins.canFinishDFS(3, new int[][]{{0, 1}, {1, 2}}));
     }
+
+//    2,[1,0]
+    //There are a total of 2 courses to take.
+    // To take course 1 you should have finished course 0. So it is possible.
+
 
 }

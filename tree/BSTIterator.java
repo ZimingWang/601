@@ -2,6 +2,7 @@ package tree;
 
 import apple.laf.JRSUIUtils;
 
+import java.util.ArrayList;
 import java.util.Stack;
 
 /**
@@ -31,6 +32,7 @@ public class BSTIterator {
     }
     Stack<TreeNode> stack;
     public BSTIterator(TreeNode root) {
+        stack = new Stack<>() ;
         TreeNode cur = root;
         while(cur!=null){
             stack.push(cur);
@@ -39,7 +41,7 @@ public class BSTIterator {
     }
 
     /** @return whether we have a next smallest number */
-    public boolean hasNext() {
+    public boolean hasNext(){
         return !stack.isEmpty();
     }
 
@@ -49,16 +51,17 @@ public class BSTIterator {
      What to do next? After returning the smallest TreeNode, I need to point the pointer to the next smallest TreeNode.
      */
     public int next() {
-        TreeNode top = stack.pop();
-        if(top.right!=null){
-            TreeNode cur = top;
-            while(cur!=null){
-                stack.push(cur);
-                cur=cur.left;
+        TreeNode node = stack.pop();
+        if(node.right!=null){
+            TreeNode cur = node;
+            while(cur.left!=null){
+                cur = cur.left;
             }
+            stack.push(cur);
         }
-        return top.val;
+        return node.val;
     }
+
 }
 
 /**

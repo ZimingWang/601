@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.Scanner;
 
 /**
- * Created by lipingxiong on 9/5/15.
  */
 public class minEditDistance {
 
@@ -89,10 +88,5 @@ public class minEditDistance {
 //        System.out.println(res);
         return res;
     }
-
-//    static String getTesla(int cars, int suvs) {
-//
-//
-//    }
 
 }

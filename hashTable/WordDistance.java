@@ -10,6 +10,7 @@ import java.util.Map;
  */
 public class WordDistance {
     Map<String, ArrayList<Integer>> map = new HashMap<>();
+
     public WordDistance(String[] words) {
         for(int i=0;i<words.length;i++){
             if(!map.containsKey(words[i])){
@@ -39,6 +40,35 @@ public class WordDistance {
         }
         return min;
     }
+
+
+    public int shortestWordDistance(String[] words, String word1, String word2) {
+        int p1 = -1;
+        int p2= -1;
+        int min = words.length;
+        for(int i=0;i<words.length;i++){
+            if(words[i].equals(word1)){
+                if(word1.equals(word2)){
+                    if(p1 != -1 && i-p1< min) {
+                        min = i-p1;
+                        p1=i;
+                        break;
+                    }
+                }
+                else{
+                    p1=i;
+                }
+            }
+            else if(words[i].equals(word2)){
+                p2=i;
+            }
+            if(p1!=-1 && p2!=-1 && p2-p1 < min){
+                min = p2-p1;
+            }
+        }
+        return min;
+    }
+
 /*
 For example,
 Assume that words = ["practice", "makes", "perfect", "coding", "makes"].
@@ -58,4 +88,6 @@ Given word1 = "makes", word2 = "coding", return 1.
 // WordDistance wordDistance = new WordDistance(words);
 // wordDistance.shortest("word1", "word2");
 // wordDistance.shortest("anotherWord1", "anotherWord2");
+
+
 

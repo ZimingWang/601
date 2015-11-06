@@ -9,4 +9,11 @@ public class com {
         }
         System.out.println();
     }
+    public static void ptrStr(String[] num){
+        for(int k=0;k<num.length;k++){
+            System.out.print(num[k] + ",");
+        }
+        System.out.println();
+        System.out.println("len="+num.length);
+    }
 }

@@ -23,6 +23,7 @@ public class boxStack {
 
 //        Box[] boxes = createRotations(boxes);
         Box[] boxes = new Box[matrix.length];
+
         for (int i = 0; i < boxes.length; i++) {
             boxes[i] = new Box(matrix[i][0], matrix[i][1], matrix[i][2]);
         }

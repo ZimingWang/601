@@ -32,10 +32,13 @@ public class mergeSort {
     public static void mergeSort(int l, int r){
         if(l>=r) return;  // base case,one element,mergeSort can return,and begin to merge
         int m=(l+r)/2; //middle
+
         mergeSort(l,m); //NOTE: (l,m)
         mergeSort(m+1,r);
+
         merge(l,m,r);
     }
+
     //merge two sorted array
     public static void merge(int l, int m, int r){
         //System.out.printf("l=%s,m=%s,r=%s\n",l,m,r);

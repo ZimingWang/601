@@ -7,6 +7,8 @@ import java.util.PriorityQueue;
 
 /**
  * Created by lipingxiong on 8/24/15.
+ * heap顶部是最早结束的meeting，如果当前meeting 的开始时间比这个大，说明不需要新的room，否则需要新的room
+ *
  */
 public class minMeetingRooms {
 //    * Definition for an interval.
@@ -17,39 +19,40 @@ public class minMeetingRooms {
         Interval(int s, int e){start=s; end =e;}
     }
 
-    public int minMeetingRooms(Interval[] intervals) {
-        Arrays.sort(intervals, new Comparator<Interval>() {
-            @Override
-            public int compare(Interval o1, Interval o2) {
-                return o1.start - o2.start;
-            }
-        });
-        // use min heap to keep track of the min end time of the meetings
-        // already found have to have
-        PriorityQueue<Interval> pq= new PriorityQueue<>(intervals.length,
-                new Comparator<Interval>() {
-                    @Override
-                    public int compare(Interval o1, Interval o2) {
-                        return o1.end - o2.end;
-                    }
-                }
-        );
-        pq.offer(intervals[0]);
-        Interval cur= new Interval();
-        for(int i=0;i<intervals.length;i++){
-            cur = pq.poll();
-            if(intervals[i].start < cur.end){
-                //need a new room
-                pq.offer(intervals[i]);
-            }
-            else{
-                //merge two intervals
-                cur.end = intervals[i].end;
-            }
-        }
-        pq.offer(cur);
-        return pq.size();
-    }
+
+//    public int minMeetingRooms(Interval[] intervals) {
+//        Arrays.sort(intervals, new Comparator<Interval>() {
+//            @Override
+//            public int compare(Interval o1, Interval o2) {
+//                return o1.start - o2.start;
+//            }
+//        });
+//        // use min heap to keep track of the min end time of the meetings
+//        // already found have to have
+//        PriorityQueue<Interval> pq= new PriorityQueue<>(intervals.length,
+//                new Comparator<Interval>() {
+//                    @Override
+//                    public int compare(Interval o1, Interval o2) {
+//                        return o1.end - o2.end;
+//                    }
+//                }
+//        );
+//        pq.offer(intervals[0]);
+//        Interval cur= new Interval();
+//        for(int i=0;i<intervals.length;i++){
+//            cur = pq.poll();
+//            if(intervals[i].start < cur.end){
+//                //need a new room
+//                pq.offer(intervals[i]);
+//            }
+//            else{
+//                //merge two intervals
+//                cur.end = intervals[i].end;
+//            }
+//        }
+//        pq.offer(cur);
+//        return pq.size();
+//    }
 
     /*
 Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei), find the minimum number of conference rooms required.
