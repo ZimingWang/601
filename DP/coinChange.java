@@ -27,34 +27,24 @@ public class coinChange{
 //            System.out.println(c);
 //        in.close();
 
+
     }
-    public int minCoinNum(int[] coins, int c){
-        int m = coins.length;
-        int[][] t = new int[m+1][c+1];
-        for(int i=0;i<=m;i++){
-            t[i][0] = 0;
-        }
-        for(int i=0;i<=c;i++){
-            t[0][i] = Integer.MAX_VALUE;
-        }
-        for(int i=1;i<=m;i++){
-            for(int j=1;j<=c;j++){
-                if(j >= coins[i-1]){
-                    t[i][j] = Math.min(t[i-1][j],t[i][j-coins[i-1]] + 1 );
-                }
-                else t[i][j] = t[i-1][j];
-            }
-        }
-        return t[m][c];
-    }
+
+/*
+    https://github.com/mission-peace/interview/blob/master/src/com/interview/dynamic/CoinChanging.java
+    http://www.geeksforgeeks.org/dynamic-programming-set-7-coin-change/
+    */
     private static long[][] countWays(int[] coins,int c){
         int m = coins.length;
         long[][] dp = new long[m+1][c+1];
-        //c==0时候，只有一种方法，就是一个coin都不用，所以第一列都是1
+        // row 0 is 0,no coins, no way to get any value
+        //col 0 is 1,c==0时候，只有一种方法，就是一个coin都不用，所以第一列都是1
         for(int i=0;i<=m;i++){
             dp[i][0]=1;
         }
+        // use mod to avoid overflow
         long mod = (long)(Math.pow(10,9)+7);
+
         for(int i=1;i<=m;i++){
             for(int j=1;j<=c;j++){
 //                只有当c大于当前coin的值的时候，才有可能用该coin
@@ -67,6 +57,29 @@ public class coinChange{
             }
         }
         return dp;
+    }
+
+    public int minCoinNum(int[] coins, int c){
+        int m = coins.length;
+        int[][] t = new int[m+1][c+1];
+        //col 0 is 0: need 0 coins to get val 0
+        for(int i=0;i<=m;i++){
+            t[i][0] = 0;
+        }
+        //row 0 is MAX, used for simplisity
+        for(int i=0;i<=c;i++){
+            t[0][i] = Integer.MAX_VALUE;
+        }
+        //j>coins[i-1],we can use coins[i-1],the update t[i][j],
+        for(int i=1;i<=m;i++){
+            for(int j=1;j<=c;j++){
+                if(j >= coins[i-1]){
+                    t[i][j] = Math.min(t[i-1][j],t[i][j-coins[i-1]] + 1 );
+                }
+                else t[i][j] = t[i-1][j];
+            }
+        }
+        return t[m][c];
     }
 
     private static long[] numWays(int[] A, int[] T){

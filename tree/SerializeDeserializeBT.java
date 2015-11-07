@@ -2,6 +2,9 @@ package tree;
 import tree.BTree.*;
 /**
  * Created by lipingxiong on 11/6/15.
+ * subtree为空，用null表示，递归进行。
+ * deserialize的时候也是递归，先将string 转成array，然后一个一个进行，按preorder的顺序，
+ * 下root，然后left，right。 用index【】 来记录当前处理到array的哪个位置，因为不能用global，而且java中是值传递
  */
 public class SerializeDeserializeBT {
     public static void main(String[] args){
