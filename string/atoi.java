@@ -6,25 +6,39 @@ public class atoi {
     public static void main(String[] args){
         System.out.println(myAtoi("+"));
         System.out.println(myAtoi("+1"));
+        System.out.println(myAtoi("-01"));
+        System.out.println(myAtoi("-001"));
+        System.out.println(myAtoi("-001"));
     }
     public static int myAtoi(String str) {
-        str=str.trim();
-        int n=str.length();
-        if(n==0) return 0;
-        int sum=0;
-        int i=0;
-        int sign=1;
-
-        if(str.charAt(0)=='-') {sign=-1;i++;}
-        else if(str.charAt(0)=='+'){i++;}
-
-        for(;i<n;i++){
-            if(str.charAt(i)<'0' || str.charAt(i) >'9') return 0;
-            int d = str.charAt(i) - '0';
-//            System.out.println( "d="+ d );
-            if( sum > (Integer.MAX_VALUE - d)/10)return Integer.MAX_VALUE;
-            sum=sum * 10 + d;
+        if(str==null)
+        {
+            return 0;
         }
-        return sum * sign;
+        str = str.trim();
+        if(str.length()==0)
+            return 0;
+        boolean isNeg = false;
+        int i = 0;
+        if(str.charAt(0)=='-' || str.charAt(0)=='+')
+        {
+            i++;
+            if(str.charAt(0)=='-')
+                isNeg = true;
+        }
+        int res = 0;
+        while(i<str.length())
+        {
+            if(str.charAt(i)<'0'||str.charAt(i)>'9')
+                break;
+            int digit = (int)(str.charAt(i)-'0');
+            if(isNeg && res>-((Integer.MIN_VALUE+digit)/10))
+                return Integer.MIN_VALUE;
+            else if(!isNeg && res>(Integer.MAX_VALUE-digit)/10)
+                return Integer.MAX_VALUE;
+            res = res*10+digit;
+            i++;
+        }
+        return isNeg?-res:res;
     }
 }

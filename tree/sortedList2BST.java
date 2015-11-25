@@ -34,6 +34,9 @@ public class sortedList2BST {
         }
         return sortedListToBST(head,0,n-1);
     }
+    /*
+    先算出linklist的长度；然后将前半部分进行转换，
+     */
     public TreeNode sortedListToBST(ListNode cur,int l,int r) {
         if(l>r) return null;
         int m = l+(r-l)/2;

@@ -9,7 +9,14 @@ import java.util.PriorityQueue;
 public class heaps {
     public int findKthLargest(int[] nums, int k) {
         if(nums==null || k>nums.length) return -1;
-        final PriorityQueue<Integer> heap = new PriorityQueue<Integer>();
+        final PriorityQueue<Integer> heap = new PriorityQueue<Integer>(k,
+                new Comparator<Integer>() {
+                    @Override
+                    public int compare(Integer o1, Integer o2) {
+                        return o2 - o1;
+                    }
+                });
+
         for (int i = 0; i < k; i++) {
             heap.offer(nums[i]);
         }
@@ -23,4 +30,6 @@ public class heaps {
         }
         return heap.peek();
     }
+
 }
+

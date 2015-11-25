@@ -12,12 +12,45 @@ public class binarySearchs {
 //        System.out.println(search(new int[]{6, 6, 7}, 7));
 
 //        System.out.println(searchInsert(new int[]{1,3,5,6},7));
-//        searchRange(new int[]{5,7,8,8,10},7);
+        searchRange(new int[]{5,7,8,8,10}, 8);
 //        System.out.println(sqrt(10));
 //        System.out.println(findPeakElement(new int[]{1, 2, 3, 1}));
 //        System.out.println(findPeakElement(new int[]{1, 2, 1, 3, 1}));
-        System.out.println(findPeakElement(new int[]{1,2}));
+//        System.out.println(findPeakElement(new int[]{1,2}));
     }
+
+    public static int[] searchRange(int[] A, int target) {
+        //find left boiundary
+        int l = 0,r=A.length-1,m=0;
+        int left = -1,right=-1;
+        while(l<=r){
+            m = l+(r-l)/2;
+            System.out.printf("l=%d,m=%d,r=%d, A[l]=%d,A[m]=%d,A[r]=%d\n",l,m,r,A[l],A[m],A[r]);
+            if(A[m]<target){
+                l=m+1;
+            }
+            else if (A[m] >= target)  r=m-1;
+        }
+        System.out.printf("End: l=%d,r=%d\n",l,r);
+        left = l;
+
+//        找右边届，相等的时候还是要向右边找，when A[mid]==key,we know that the right boundary
+//        still on the right, still need to look for it
+        l=0; r=A.length-1;
+        while(l<=r){
+            m = l+(r-l)/2;
+            if(A[m]<=target) l=m+1; //equal, also go to right, we are looking for right boundary
+            else r=m-1;
+        }
+        System.out.printf("End: l=%d,r=%d\n",l,r);
+        right = r;
+
+        System.out.printf("End: left=%d,right=%d\n",left,right);
+        if(left > right) {left=-1; right=-1;}
+        return new int[]{left,right};
+    }
+
+
     public static int findPeakElement(int[] A) {
         int l=0;
         int r=A.length - 1;
@@ -100,35 +133,6 @@ public class binarySearchs {
 //        }
 //        return false;
 //    }
-
-    public static int[] searchRange(int[] A, int target) {
-        //find left boiundary
-        int l = 0,r=A.length-1,m=0;
-        int left = -1,right=-1;
-        while(l<=r){
-            m = l+(r-l)/2;
-            System.out.printf("l=%d,m=%d,r=%d, A[l]=%d,A[m]=%d,A[r]=%d\n",l,m,r,A[l],A[m],A[r]);
-            if(A[m]<target){
-                l=m+1;
-            }
-            else if (A[m] >= target)  r=m-1;
-        }
-        System.out.printf("End: l=%d,r=%d\n",l,r);
-        left = l;
-
-        l=0; r=A.length-1;
-        while(l<=r){
-            m = l+(r-l)/2;
-            if(A[m]<=target) l=m+1; //equal, also go to right, we are looking for right boundary
-            else r=m-1;
-        }
-        System.out.printf("End: l=%d,r=%d\n",l,r);
-        right = r;
-
-        System.out.printf("End: left=%d,right=%d\n",left,right);
-        if(left > right) {left=-1; right=-1;}
-        return new int[]{left,right};
-    }
 
         public static int searchInsert(int[] A, int target ){
         int l = 0;

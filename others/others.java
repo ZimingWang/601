@@ -58,7 +58,42 @@ public class others {
 //        System.out.println(s.substring(1));
 //        System.out.println(s.substring(2).equals(t.substring(3)) );
 //        System.out.println("abc".substring(1));
+        for (int i=0; i<100;i++) {
+            System.out.println(o.canWinNim(i));
+        }
 }
+
+    public boolean canWinNim(int n) {
+        boolean[] visited = new boolean[n+1];
+        boolean[] t = new boolean[n+1];
+        return canWinNim(n, t,visited);
+    }
+    public boolean canWinNim(int n, boolean[] t, boolean[] visited) {
+        if(visited[n] == true) return t[n];
+
+        if(n<=3) {
+            visited[n] = true;
+            t[n] = true;
+            return true;
+        }
+        boolean rst1 = canWinNim(n-1);
+        boolean rst2 = canWinNim(n-2);
+        boolean rst3 = canWinNim(n-3);
+        visited[n-1] = visited[n-2] =visited[n-3] = true;
+        t[n-1] = rst1;
+        t[n-2] =rst2;
+        t[n-2] = rst3;
+        if (!rst1 || !rst2|| !rst3){
+            visited[n] = true;
+            t[n] = true;
+            return true;
+        }
+        visited[n] = true;
+        t[n] = false;
+        return false;
+    }
+
+
 
 //    public static int longestchain(String[] dict){
 //        HashSet<String> set = new HashSet<>();
@@ -94,6 +129,31 @@ public class others {
 //    }
 
 
+
+    public int numIslands(char[][] grid){
+        int m = grid.length;
+        int n = grid[0].length;
+        int count=0;
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(grid[i][j] == '1') {
+                    count++;
+                    dfs(grid, i, j);
+                }
+            }
+        }
+        return count;
+    }
+    private void dfs(char[][] grid, int i, int j){
+        int[][] dir = new int[][]{{-1,0},{0,-1},{1,0},{0,1}};
+        int m = grid.length;
+        int n = grid[0].length;
+        if(i<0 || i>=m || j<0 || j>=n || grid[i][j] == 0) return;
+        grid[i][j] = 0;
+        for(int[] d : dir){
+            dfs(grid, i+d[0], j+d[1]);
+        }
+    }
 
 //
 //    第一题，把一个integer的数字顺序打乱后得到的新的integer叫做该integer的sibling   比如 123和231，132，213，321都是sibling，但和222就不是。

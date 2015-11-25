@@ -32,10 +32,35 @@ public class trees {
         String[] arr = s.split(",");
         com.com.ptrStr(arr);
     }
-
 //    boolean checkBST(TreeNode n, Integer min, Integer max){
 //        if(min!=null && n.val<min || )
 //    }
+    class RandomListNode{
+        int label;
+        RandomListNode next, random;
+        RandomListNode(int x){
+            this.label  = x;
+        }
+    }
+/*
+b-a = 1
+a-1 = b
+a - 1 + 26 = z
+ */
+
+
+
+  public void levelList(TreeNode root, List< List<Integer> > lists, int level){
+        ArrayList<Integer> item = null;
+        if(lists.size() == level) {
+            item = new ArrayList<>();
+            lists.add(item);
+        }
+        item = (ArrayList)lists.get(level);
+        item.add(root.val);
+        createList(root.left, lists, level + 1);
+        createList(root.right, lists, level + 1);
+    }
 
     public static List<Integer> serialize(TreeNode root){
         List<Integer> res = new LinkedList<>();

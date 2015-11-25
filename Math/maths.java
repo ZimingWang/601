@@ -21,43 +21,7 @@ public class maths {
 //        m.randomWeight(new int[]{});
 //        assert();
     }
-/*
-产生 0-max的数字，如果想要1-max，就是在生成之后加上1
-http://www.javaguru.co/2014/12/how-to-generate-range-of-random.html
- */
-    public int getRandom(int max){
-        Random random = new Random();
-        return random.nextInt(max+1); //0---max
-//        for(int i=0;i<10;i++){
-//            System.out.println(random.nextInt(9) + 1);
-//        }
-    }
 
-/*
-(a,1),(b,2)(c,3)
-1,3,6
-0-1---3----6
-   */
-
-    public int randomWeight(int[] arr,char[] vals){
-        int n = arr.length;
-        int[] sum = new int[n];
-        sum[0] = arr[0];
-
-        for(int i=1;i<arr.length;i++){
-            sum[i] = sum[i-1]+arr[i];
-        }
-        int num = getRandom(sum[n-1]);
-        int l=0,r=n-1;
-        int index = 0;
-        while(l<=r){
-            int m = (l+r)/2;
-            if(sum[m]==num) index = m;
-            else if(sum[m] > num) r= m-1;
-            else l=m+1;
-        }
-        return vals[index];
-    }
 
     public static String encode(int n){
         if(n<1) return "";

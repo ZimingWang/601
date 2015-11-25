@@ -2,8 +2,9 @@ package tree;
 
 /**
  * Created by lipingxiong on 9/18/15.
+ http://www.crazyforcode.com/mirror-image-binary-tree/
  */
-//http://www.crazyforcode.com/mirror-image-binary-tree/
+
 
 public class MirrorTree {
     public static class Node{
@@ -26,6 +27,7 @@ public class MirrorTree {
         mirror(root.right);
         return root;
     }
+
     public void mirror2(Node root){
         print(root);
         Node x = mirrorTree(root);

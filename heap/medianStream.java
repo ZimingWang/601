@@ -36,9 +36,12 @@ public class medianStream {
         PriorityQueue<Double> minHeap = new PriorityQueue<>();// store large numbers
         PriorityQueue<Double> maxHeap = new PriorityQueue<Double>(1,new DescComparator());
 //        Heap<Double> maxHeap = new Heap<>(new DescComparator());
+
         for(int i=0;i<nums.length;i++){
+            // even
             if( (minHeap.size() + maxHeap.size())%2 == 0){//even,go to minHeap
                 System.out.println("even "+nums[i]);
+
                 if(maxHeap.size()>0 && nums[i] < maxHeap.peek()){
                     System.out.println("move maxHeap.peek() to minHeap");
                     maxHeap.offer(nums[i]);
@@ -49,10 +52,10 @@ public class medianStream {
 //                    ptrHeap(maxHeap);
                 }
                 else{
-
                     minHeap.offer(nums[i]);
                 }
             }
+            // odd
             else{
                 System.out.println("odd,go to maxHeap,nums[i]= "+nums[i]);
                 if(nums[i] > minHeap.peek()){
@@ -89,6 +92,7 @@ public class medianStream {
             heap.offer(num);
         }
     }
+
     public static void main(String[] args){
         double[] nums = new double[]{3.,2.,1.,7.};
         System.out.println( "res="+ medianStream(nums) );

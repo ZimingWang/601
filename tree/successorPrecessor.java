@@ -16,6 +16,7 @@ public class successorPrecessor {
         root.left = new TreeNode(5);
         root.right = new TreeNode(20);
         root.left.left=new TreeNode(4);
+
 //        BTree.printNode(root);
 //        root.right.right = new TreeNode(10);
         TreeNode root2 = BTree.createTree(new int[]{1,2,3,4,5});
@@ -61,6 +62,7 @@ public class successorPrecessor {
             }
         }
     }
+
     // 把pre，suc当参数这样传是不行的，这是值传递，没办法把新的值往回传
 //    static void successorPrecessor(TreeNode root,int key,TreeNode pre,TreeNode suc){
 //        //before go to right,update pre
@@ -91,25 +93,6 @@ public class successorPrecessor {
 //        }
 //    }
 
-
-//    //has parent
-//    public static void main(String[] args) {
-//        TreeNode root = new TreeNode(10);
-//        root.left = new TreeNode(5);
-////        root.right = new TreeNode(20);
-//        root.left.left=new TreeNode(4);
-//        root.left.left.parent = root.left;
-//        root.left.parent = root;
-////        root.right.parent=root;
-//
-////        root.right.right = new TreeNode(10);
-//        TreeNode res = findsuccessor(root, 10);
-//
-//        if(res!=null) {
-//            System.out.println("res=" + res.val);
-//        }
-//        else System.out.println("res="+res);
-//    }
 
     //has parent
     TreeNode getSuccessor(TreeNode node){
